@@ -1,0 +1,13 @@
+name: rkGames
+version: '${version}'
+main: com.roseworld.rkGames.RkGames
+api-version: '1.21'
+author: 'TMG8047KG'
+prefix: 'rkGames'
+description: RoseKingdom's vanilla mini-games
+dependencies:
+  server:
+    RoseKingdom:
+      required: true
+      join-classpath: true
+      load: BEFORE
