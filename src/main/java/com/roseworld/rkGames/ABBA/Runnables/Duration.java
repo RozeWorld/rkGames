@@ -30,11 +30,26 @@ public class Duration extends BukkitRunnable {
                 lobby.closeLobbyProtocol();
                 this.cancel();
             }
-            case 1 -> lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Red("1"), Component.empty())));
-            case 2 -> lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Orange("2"), Component.empty())));
-            case 3 -> lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Gold("3"), Component.empty())));
-            case 4 -> lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Lime("4"), Component.empty())));
-            case 5 -> lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Lime("5"), Component.empty())));
+            case 1 -> {
+                lobby.getPlayers().forEach(player -> player.playNote(player.getLocation(), Instrument.PLING, Note.sharp(2, Note.Tone.F)));
+                lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Red("1"), Component.empty())));
+            }
+            case 2 -> {
+                lobby.getPlayers().forEach(player -> player.playNote(player.getLocation(), Instrument.PLING, Note.sharp(2, Note.Tone.F)));
+                lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Orange("2"), Component.empty())));
+            }
+            case 3 -> {
+                lobby.getPlayers().forEach(player -> player.playNote(player.getLocation(), Instrument.PLING, Note.sharp(1, Note.Tone.B)));
+                lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Gold("3"), Component.empty())));
+            }
+            case 4 -> {
+                lobby.getPlayers().forEach(player -> player.playNote(player.getLocation(), Instrument.PLING, Note.sharp(1, Note.Tone.B)));
+                lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Lime("4"), Component.empty())));
+            }
+            case 5 -> {
+                lobby.getPlayers().forEach(player -> player.playNote(player.getLocation(), Instrument.PLING, Note.sharp(1, Note.Tone.E)));
+                lobby.getPlayers().forEach(player -> player.showTitle(Title.title(Message.Lime("5"), Component.empty())));
+            }
             default -> lobby.getPlayers().forEach(player -> player.sendActionBar(Component.text(formatSeconds(time))));
         }
         time--;

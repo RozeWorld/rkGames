@@ -24,7 +24,6 @@ public class Lobby {
     Timer timer;
     boolean started = false;
 
-
     public boolean isStarted() {
         return started;
     }
@@ -137,7 +136,7 @@ public class Lobby {
 
     public void closeLobbyProtocol() {
         List<Map.Entry<UUID, Integer>> entries = new ArrayList<>(points.entrySet());
-        entries.sort(Map.Entry.comparingByValue());
+        entries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
         getPlayers().forEach(player -> {
             player.sendMessage(Message.Orange("==========").append(Message.Gold("Leaderboard").append(Message.Orange("=========="))));
             for(Map.Entry<UUID, Integer> entry : entries) {

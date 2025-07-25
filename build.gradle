@@ -19,8 +19,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
-    implementation(files("lib/RoseKingdom-1.1.6-BETA.jar"))
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    implementation(files("lib/RoseKingdom-1.1.8-BETA.jar"))
 }
 
 tasks {
