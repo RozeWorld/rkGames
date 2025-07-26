@@ -4,6 +4,7 @@ main: com.roseworld.rkGames.RkGames
 api-version: '1.21'
 author: 'TMG8047KG'
 prefix: 'rkGames'
+website: https://github.com/RozeWorld/rkGames
 description: RoseKingdom's vanilla mini-games
 dependencies:
   server:

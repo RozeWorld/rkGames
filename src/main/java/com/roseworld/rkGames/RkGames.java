@@ -1,6 +1,7 @@
 package com.roseworld.rkGames;
 
 import com.roseworld.rkGames.ABBA.Events.OreListener;
+import com.roseworld.rkGames.Commands.CommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class RkGames extends JavaPlugin {

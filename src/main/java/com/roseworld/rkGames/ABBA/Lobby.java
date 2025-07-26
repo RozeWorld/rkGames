@@ -3,17 +3,13 @@ package com.roseworld.rkGames.ABBA;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.roseworld.rkGames.ABBA.Runnables.CloseLobby;
 import com.roseworld.rkGames.RkGames;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class Lobby {
     String lobbyName;
@@ -22,7 +18,15 @@ public class Lobby {
     HashMap<UUID, Integer> points = new HashMap<>();
     LinkedHashMap<Material, Integer> pointsPerOre = new LinkedHashMap<>();
     Timer timer;
+    boolean openLobby = true;
     boolean started = false;
+    int closureId;
+
+    public boolean isOpenLobby() { return openLobby; }
+
+    public void setOpenLobby(boolean open){
+        this.openLobby = open;
+    }
 
     public boolean isStarted() {
         return started;
@@ -36,6 +40,7 @@ public class Lobby {
         this.lobbyName = lobbyName;
         this.creator = player.getUniqueId();
         players.put(player.getUniqueId(), player);
+        points.put(player.getUniqueId(), 0);
 
         pointsPerOre.put(Material.DIAMOND_ORE, 6);
         pointsPerOre.put(Material.EMERALD_ORE, 5);
@@ -56,8 +61,10 @@ public class Lobby {
     }
 
     public void addPlayer(Player player) {
+        getPlayers().forEach(p -> p.sendMessage(player.displayName().append(Message.Lime(" joined the lobby!"))));
         players.put(player.getUniqueId(), player);
         points.put(player.getUniqueId(), 0);
+        player.sendMessage(Message.Lime("You joined the "+ this.getName() +" lobby!"));
     }
 
     public boolean hasPlayer(Player player) {
@@ -134,6 +141,18 @@ public class Lobby {
         return pointsPerOre;
     }
 
+    public String createInvite(){
+        String abc123 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder invite = new StringBuilder();
+        Random rnd = new Random();
+        while (invite.length() < 10) { // length of the random string.
+            invite.append(abc123.charAt(rnd.nextInt(36)));
+        }
+        LobbyManager.addInvite(this, invite.toString());
+        return invite.toString();
+    }
+
+
     public void closeLobbyProtocol() {
         List<Map.Entry<UUID, Integer>> entries = new ArrayList<>(points.entrySet());
         entries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
@@ -150,6 +169,10 @@ public class Lobby {
             if(player.getUniqueId().equals(getCreator())) continue;
             player.sendMessage(Message.Red("Game Ended! ").append(Message.Orange("[Leave lobby]").clickEvent(ClickEvent.runCommand("/abba leave"))));
         }
-        Bukkit.getServer().getScheduler().runTaskLater(JavaPlugin.getPlugin(RkGames.class), new CloseLobby(this), 3*60*20);
+        closureId = Bukkit.getServer().getScheduler().runTaskLater(JavaPlugin.getPlugin(RkGames.class), new CloseLobby(this), 3*60*20).getTaskId();
+    }
+
+    public void skipProtocol() {
+        Bukkit.getServer().getScheduler().cancelTask(closureId);
     }
 }

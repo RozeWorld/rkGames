@@ -1,6 +1,5 @@
-package com.roseworld.rkGames;
+package com.roseworld.rkGames.Commands;
 
-import com.roseworld.rkGames.Commands.abba;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
